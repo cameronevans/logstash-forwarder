@@ -48,7 +48,7 @@ func (h *Harvester) Harvest(output chan *FileEvent) {
 	buffer := new(bytes.Buffer)
 
 	var read_timeout = 10 * time.Second
-	last_read_time := time.Now()
+	// last_read_time := time.Now()
 	for {
 		text, bytesread, err := h.readline(reader, buffer, read_timeout)
 
@@ -73,7 +73,7 @@ func (h *Harvester) Harvest(output chan *FileEvent) {
 				return
 			}
 		}
-		last_read_time = time.Now()
+		// last_read_time = time.Now()
 
 		line++
 		event := &FileEvent{
