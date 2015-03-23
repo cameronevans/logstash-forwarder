@@ -48,7 +48,7 @@ func (h *Harvester) Harvest(output chan *FileEvent) {
 	buffer := new(bytes.Buffer)
 
 	var read_timeout = 10 * time.Second
-	last_read_time := time.Now()
+	// last_read_time := time.Now()
 	for {
 		text, bytesread, err := h.readline(reader, buffer, read_timeout)
 
@@ -61,11 +61,11 @@ func (h *Harvester) Harvest(output chan *FileEvent) {
 					emit("File truncated, seeking to beginning: %s\n", h.Path)
 					h.file.Seek(0, os.SEEK_SET)
 					h.Offset = 0
-				} else if age := time.Since(last_read_time); age > h.FileConfig.deadtime {
-					// if last_read_time was more than dead time, this file is probably
-					// dead. Stop watching it.
-					emit("Stopping harvest of %s; last change was %v ago\n", h.Path, age)
-					return
+				// } else if age := time.Since(last_read_time); age > h.FileConfig.deadtime {
+				// 	// if last_read_time was more than dead time, this file is probably
+				// 	// dead. Stop watching it.
+				// 	emit("Stopping harvest of %s; last change was %v ago\n", h.Path, age)
+				// 	return
 				}
 				continue
 			} else {
@@ -73,7 +73,7 @@ func (h *Harvester) Harvest(output chan *FileEvent) {
 				return
 			}
 		}
-		last_read_time = time.Now()
+		// last_read_time = time.Now()
 
 		line++
 		event := &FileEvent{
